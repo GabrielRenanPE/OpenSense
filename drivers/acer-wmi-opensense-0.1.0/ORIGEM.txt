@@ -1,0 +1,8 @@
+Base: acer-wmi.c fornecido pelo usuário, informado como Linux v7.3.
+SHA256 original: 6b2ea3fff1a1c73a83d572e82ffa18c86d2a4641d3ecdf87fc59940c76c73fae
+Patch de referência: https://lists.openwall.net/linux-kernel/2026/09/20/304
+Adaptação: os campos hwmon e platform_profile da referência são representados pelo campo predator_v4 nesta base; correspondência DMI exata.
+Licença do código: GPL-2.0-or-later, conforme cabeçalho original.
+
+Empacotamento DKMS 0.1.0: adicionado MODULE_VERSION, sem mudanças nas rotinas WMI do experimento.
+Novo empacotamento e scripts: GPL-2.0-or-later.

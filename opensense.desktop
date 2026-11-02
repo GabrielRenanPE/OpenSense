@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=OpenSense
+Comment=Monitoramento, gráficos e proteção da bateria
+Exec=opensense
+Icon=opensense
+Terminal=false
+Categories=System;Monitor;
+StartupNotify=true

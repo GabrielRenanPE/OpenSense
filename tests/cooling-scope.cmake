@@ -1,0 +1,21 @@
+foreach(operation IN ITEMS gpu-hybrid gpu-integrated battery-on battery-off)
+  execute_process(COMMAND "${HELPER}" "${operation}"
+                  RESULT_VARIABLE status ERROR_VARIABLE error)
+  if(NOT status EQUAL 2 OR NOT error MATCHES "fora do controle de resfriamento")
+    message(FATAL_ERROR "Cooling helper accepted or incorrectly rejected ${operation}: ${error}")
+  endif()
+endforeach()
+foreach(operation IN ITEMS "fan-manual:0" "fan-manual:101" "fan-manual:60;id" "profile-unknown")
+  execute_process(COMMAND "${HELPER}" "${operation}"
+                  RESULT_VARIABLE status ERROR_VARIABLE error)
+  if(NOT status EQUAL 2 OR NOT error MATCHES "Operação não permitida")
+    message(FATAL_ERROR "Invalid operation reached privileged handler: ${operation}")
+  endif()
+endforeach()
+# O binário de resfriamento não deve conter o código de GPU nem de bateria.
+foreach(forbidden IN ITEMS "envycontrol" "charge_control_start_threshold")
+  file(STRINGS "${HELPER}" leaked REGEX "${forbidden}" LIMIT_COUNT 1)
+  if(leaked)
+    message(FATAL_ERROR "Cooling helper still contains ${forbidden} code")
+  endif()
+endforeach()

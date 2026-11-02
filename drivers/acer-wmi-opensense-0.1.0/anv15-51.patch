@@ -1,0 +1,40 @@
+--- a/acer-wmi.c
++++ b/acer-wmi.c
+@@ -40,6 +40,7 @@
+ MODULE_AUTHOR("Carlos Corbacho");
+ MODULE_DESCRIPTION("Acer Laptop WMI Extras Driver");
+ MODULE_LICENSE("GPL");
++MODULE_VERSION("0.1.0");
+ 
+ /*
+  * Magic Number
+@@ -460,6 +461,13 @@
+ 	.pwm = 1,
+ };
+ 
++static struct quirk_entry quirk_acer_nitro_anv15_51 = {
++	.cpu_fans = 1,
++	.gpu_fans = 1,
++	.predator_v4 = 1,
++	.pwm = 1,
++};
++
+ static struct quirk_entry quirk_acer_predator_ph315_53 = {
+ 	.turbo = 1,
+ 	.cpu_fans = 1,
+@@ -661,6 +669,15 @@
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro AN515-58"),
+ 		},
+ 		.driver_data = &quirk_acer_nitro_an515_58,
++	},
++	{
++		.callback = dmi_matched,
++		.ident = "Acer Nitro ANV15-51",
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-51"),
++		},
++		.driver_data = &quirk_acer_nitro_anv15_51,
+ 	},
+ 	{
+ 		.callback = dmi_matched,
